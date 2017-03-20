@@ -1,0 +1,60 @@
+# depslib dependency file v1.0
+1488030328 source:d:\desenvolvimento & programação\faculdade - aulas - atividades - avaliações\7º período\project- atividade i e ii\main.c
+	"library.h"
+
+1488919609 "
+
+1488914825 d:\desenvolvimento & programação\faculdade - aulas - atividades - avaliações\7º período\project- atividade i e ii\library.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<locale.h>
+	<time.h>
+	<windows.h>
+
+1488914825 >
+
+1488915575 source:d:\desenvolvimento & programação\faculdade - aulas - atividades - avaliações\7º período\project- atividade i e ii\functions.c
+	"library.h"
+
+1488920774 source:d:\desenvolvimento & programação\faculdade - aulas - atividades - avaliações\7º período\project- atividade i e ii\windows\project- atividade i e ii\main.c
+	"library.h"
+
+1488919540 d:\desenvolvimento & programação\faculdade - aulas - atividades - avaliações\7º período\project- atividade i e ii\windows\project- atividade i e ii\library.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<locale.h>
+	<time.h>
+
+1488919540 
+
+1488919609 source:d:\desenvolvimento & programação\faculdade - aulas - atividades - avaliações\7º período\project- atividade i e ii\windows\project- atividade i e ii\functions.c
+	"library.h"
+
+1489525653 source:/home/developer/Documentos/Dev/Parcial I/main.c
+	"library.h"
+
+1489524784 /home/developer/Documentos/Dev/Parcial I/library.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<locale.h>
+	<time.h>
+
+1489524689 source:/home/developer/Documentos/Dev/Parcial I/functions.c
+	"library.h"
+
+1489603403 source:d:\desenvolvimento & programação\faculdade - aulas - atividades - avaliações\7º período\parcial i\functions.c
+	"library.h"
+
+1489602477 d:\desenvolvimento & programação\faculdade - aulas - atividades - avaliações\7º período\parcial i\library.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<locale.h>
+	<time.h>
+
+1489525653 source:d:\desenvolvimento & programação\faculdade - aulas - atividades - avaliações\7º período\parcial i\main.c
+	"library.h"
+
