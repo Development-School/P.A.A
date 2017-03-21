@@ -2,6 +2,7 @@
 
 void fMenu() {
   while(1) {//Enquanto x for verdadeiro ...
+
     clear_buffer;
     clear;
     puts("\n\n");
@@ -14,39 +15,36 @@ void fMenu() {
     printf("\t\t\t0 - Sair\n");
     printf("\n------------------------------------------------------------------------------\n");
 
+    int *ptr;
     int op;
     scanf("%i", &op);
 
     switch(op) {
       case 0: exit(0);
-      case 1: fTestar(100); break;
-      case 2: fTestar(10000); break;
-      case 3: fTestar(100000); break;
-      case 4: fTestar(1000000); break;
+      case 1: fTestar(ptr, 100); break;
+      case 2: fTestar(ptr, 10000); break;
+      case 3: fTestar(ptr, 100000); break;
+      case 4: fTestar(ptr, 1000000); break;
     }
+    free(ptr);
   }
 }
 
-void fTestar(int ult) {
-  int i, item[ult];
+void fTestar(int *ptr, int MaxTam) {
+  int i;
 
-  for(i = 0; i < ult; i++) {
-    item[i] = rand() % ult;
+  ptr = (int *) malloc(MaxTam * sizeof(int));
+
+  if(ptr == NULL) { puts("Erro."); exit(0);}
+
+  for(i = 0; i < MaxTam; i++) {
+    *(ptr + i) = rand() % MaxTam;
     cadastrado++;
   }
-  fMenuOrdenacao(item, ult);
+  fMenuOrdenacao(ptr, MaxTam);
 }
 
-void fExibir(int item[], int ult) {
-  puts("\n\n");
-  int i;
-  for(i = 0; i < ult; ++i) {
-    printf("[%i] ", item[i]);
-    visualizado++;
-  }
-}
-
-void fMenuOrdenacao(int item[], int ult) {
+void fMenuOrdenacao(int *ptr, int MaxTam) {
   while(1) {
     clear_buffer;
     clear;
@@ -65,43 +63,52 @@ void fMenuOrdenacao(int item[], int ult) {
     switch(op) {
       case 0:exit(0);
       case 1:fMenu();
-      case 2:fOrdenacao(item, ult, 2); break;
-      case 3:fOrdenacao(item, ult, 3); break;
-      case 4:fOrdenacao(item, ult, 4); break;
+      case 2:fOrdenacao(ptr, MaxTam, 2); break;
+      case 3:fOrdenacao(ptr, MaxTam, 3); break;
+      case 4:fOrdenacao(ptr, MaxTam, 4); break;
     }
     fMenu();
   }
 }
 
-void fOrdenacao(int item[], int ult, int op) {
+void fExibir(int *ptr, int MaxTam) {
+  puts("\n\n");
+  int i;
+  for(i = 0; i < MaxTam; ++i) {
+    printf("[%i] ", ptr[i]);
+    visualizado++;
+  }
+}
+
+void fOrdenacao(int *ptr, int MaxTam, int op) {
   int inicio, fim;
   inicio = 0;
-  fim = ult;
+  fim = MaxTam;
 
   // Atributos para determinar tempo de ordenação
   time_t start, end;
   float tOrdenacao;
 
   clear;
-  fExibir(item, ult);
+  fExibir(ptr, MaxTam);
 
   // Início de contagem do tempo de ordenação
   start = time(NULL);
 
   if (op == 2) {
-    fOrdenacaoInsertionsort(item, fim);
+    fOrdenacaoInsertionsort(ptr, fim);
   }
   else if(op == 3) {
-    fOrdenacaoBubblesort(item, fim);
+    fOrdenacaoBubblesort(ptr, fim);
   }
   else if(op == 4) {
-    fOrdenacaoQuicksort(item, inicio, fim);
+    fOrdenacaoQuicksort(ptr, inicio, fim);
   }
   // Término de contagem do tempo de ordenação
   end = time(NULL);
   tOrdenacao = (difftime(end, start) / 1000);
 
-  fExibir(item, ult);
+  fExibir(ptr, MaxTam);
   puts("\n");
   printf("\nValores Cadastrados: %i"
          "\nValores Visualizados: %i"
@@ -113,66 +120,65 @@ void fOrdenacao(int item[], int ult, int op) {
 }
 
 // Função para Ordenação do tipo Quick Sort
-void fOrdenacaoQuicksort(int item[], int inicio, int fim) {
+void fOrdenacaoQuicksort(int *ptr, int inicio, int fim) {
   int pivo;
 
   if(inicio < fim) {
-    pivo = fParticionar(item, inicio, fim);
-    fOrdenacaoQuicksort(item, inicio, pivo - 1);
-    fOrdenacaoQuicksort(item, pivo + 1, fim);
+    pivo = fParticionar(ptr, inicio, fim);
+    fOrdenacaoQuicksort(ptr, inicio, pivo - 1);
+    fOrdenacaoQuicksort(ptr, pivo + 1, fim);
   }
 }
 
-int fParticionar(int item[], int inicio, int fim) {
+int fParticionar(int *ptr, int inicio, int fim) {
   int pivo, i, j;
   int temp;
 
   i = inicio;
   j = fim + 1;
-  pivo = item[i];
+  pivo = ptr[i];
 
   while(1) {
-    do { ++i; }while(item[i] <= pivo && i <= fim);
-    do { --j; }while(item[j] > pivo);
+    do { ++i; }while(ptr[i] <= pivo && i <= fim);
+    do { --j; }while(ptr[j] > pivo);
 
     if(i >= j) {
       break;
     }else {
-      temp = item[i];
-      item[i] = item[j];
-      item[j] = temp;
+      temp = ptr[i];
+      ptr[i] = ptr[j];
+      ptr[j] = temp;
     }
   }
 
-  temp = item[inicio];
-  item[inicio] = item[j];
-  item[j] = temp;
+  temp = ptr[inicio];
+  ptr[inicio] = ptr[j];
+  ptr[j] = temp;
   return j;
 }
 
-void fOrdenacaoBubblesort(int item[], int fim) {
+void fOrdenacaoBubblesort(int *ptr, int fim) {
   int i, j, aux;
   for (i = 0 ; i < (fim - 1 ); i++) {
     for (j = 0 ; j < fim - i - 1; j++) {
-      if (item[j] > item[j+1]) {
-        aux = item[j];
-        item[j] = item[j + 1];
-        item[j + 1] = aux;
+      if (ptr[j] > ptr[j+1]) {
+        aux = ptr[j];
+        ptr[j] = ptr[j + 1];
+        ptr[j + 1] = aux;
       }
     }
   }
 }
 
-void fOrdenacaoInsertionsort(int item[], int fim) {
+void fOrdenacaoInsertionsort(int *ptr, int fim) {
   int i, j, aux;
   for (i = 1 ; i <= fim - 1; i++) {
     j = i;
 
-    while(j > 0 && item[j] < item[j - 1]) {
-      aux = item[j];
-      item[j]   = item[j - 1];
-      item[j - 1] = aux;
-
+    while(j > 0 && ptr[j] < ptr[j - 1]) {
+      aux = ptr[j];
+      ptr[j]   = ptr[j - 1];
+      ptr[j - 1] = aux;
       j--;
     }
   }
